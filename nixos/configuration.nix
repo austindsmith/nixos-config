@@ -118,6 +118,7 @@
       rofi-wayland
       neovim
       stow
+      direnv
       sshfs
       starship
       pywal
@@ -145,6 +146,7 @@
       kubernetes-helm
       lens
       python3
+      code-cursor
 
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
