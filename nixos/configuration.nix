@@ -13,11 +13,13 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.configurationLimit = 5;
+
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos-laptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -26,6 +28,9 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.hosts = {
+    "192.168.1.26" = [ "docker-prod-01" ];
+    };
 
   # Set your time zone.
   time.timeZone = "America/Denver";
@@ -113,6 +118,7 @@
       rofi-wayland
       neovim
       stow
+      sshfs
       starship
       pywal
       waybar
