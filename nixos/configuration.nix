@@ -134,6 +134,8 @@
       git
       terraform
       ansible
+      age
+      sops
       curl
       wget
       openssh
@@ -144,13 +146,60 @@
       kustomize
       k9s
       kubernetes-helm
+      talosctl
       lens
       python3
       code-cursor
+      moonlight-qt
+      sunshine
 
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
+  
+
+
+  security.wrappers.sunshine = {
+      owner = "root";
+      group = "root";
+      capabilities = "cap_sys_admin+p";
+      source = "${pkgs.sunshine}/bin/sunshine";
+  };
+  networking.firewall = {
+  enable = true;
+  allowedTCPPorts = [ 47984 47989 47990 48010 ];
+  allowedUDPPortRanges = [
+    { from = 47998; to = 48000; }
+    #{ from = 8000; to = 8010; }
+  ];
+};
+  #services.xserver.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  services.dbus.enable = true;
+  security.polkit.enable = true;
+
+  #services.pipewire = {
+  #  enable = true;
+  #  alsa.enable = true;
+  #  alsa.support32Bit = true;
+  #  pulse.enable = true;
+  #};
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-wlr
+  ];
+
+services.avahi.publish.enable = true;
+services.avahi.publish.userServices = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -179,4 +228,7 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 
+  
+
 }
+
